@@ -1,0 +1,36 @@
+[START]
+    Character
+        - ...
+    Context
+        - ...
+    RIGHT
+       - Dialog_0
+
+[Dialog_0]
+    Character
+        - Player
+    Context
+        - 你好啊！
+    LEFT
+        - START
+    RIGHT
+       - Dialog_1
+
+[Dialog_1]
+    Character
+        - NPC
+    Context
+        - 你好，欢迎使用Eazy Dialog。
+    LEFT
+        - Dialog_0
+    RIGHT
+       - END
+
+[END]
+    Character
+        - ...
+    Context
+        - ...
+    LEFT
+        - Dialog_1
+

@@ -1,24 +1,19 @@
-[gd_scene load_steps=22 format=3 uid="uid://c6aya5u7pw8a1"]
+[gd_scene load_steps=27 format=3 uid="uid://c6aya5u7pw8a1"]
 
-[ext_resource type="Script" uid="uid://bl3no5bllnmae" path="res://example/character/Character.cs" id="1_vc4hi"]
+[ext_resource type="Script" uid="uid://0c72uox5ybd" path="res://example/script/player.gd" id="1_vjj5v"]
 [ext_resource type="Texture2D" uid="uid://da3oxhw1ty761" path="res://example/character/Basic Charakter Spritesheet.png" id="2_wdfde"]
-[ext_resource type="PackedScene" uid="uid://dlcptwhx3sutf" path="res://example/scenes/dialog_panel.tscn" id="3_wdfde"]
+[ext_resource type="Script" uid="uid://oof0733twn6y" path="res://example/script/player_state_machine.gd" id="3_bs78n"]
+[ext_resource type="Script" uid="uid://dui31h2ubqmsy" path="res://example/script/idle.gd" id="4_hs3e2"]
+[ext_resource type="Script" uid="uid://jtkfc31rkhls" path="res://example/script/talk.gd" id="5_2nyhi"]
+[ext_resource type="Script" uid="uid://dte6merpaan0n" path="res://example/script/walk.gd" id="6_3kwhw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2rnox"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_olc5l"]
 atlas = ExtResource("2_wdfde")
 region = Rect2(0, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qtvu4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6s22a"]
 atlas = ExtResource("2_wdfde")
 region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vjj5v"]
-atlas = ExtResource("2_wdfde")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bs78n"]
-atlas = ExtResource("2_wdfde")
-region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hs3e2"]
 atlas = ExtResource("2_wdfde")
@@ -35,6 +30,22 @@ region = Rect2(96, 48, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s8biw"]
 atlas = ExtResource("2_wdfde")
 region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rnox"]
+atlas = ExtResource("2_wdfde")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtvu4"]
+atlas = ExtResource("2_wdfde")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjj5v"]
+atlas = ExtResource("2_wdfde")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bs78n"]
+atlas = ExtResource("2_wdfde")
+region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p0v31"]
 atlas = ExtResource("2_wdfde")
@@ -71,21 +82,15 @@ region = Rect2(144, 144, 48, 48)
 [sub_resource type="SpriteFrames" id="SpriteFrames_olc5l"]
 animations = [{
 "frames": [{
-"duration": 0.2,
-"texture": SubResource("AtlasTexture_2rnox")
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olc5l")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qtvu4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vjj5v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bs78n")
+"texture": SubResource("AtlasTexture_6s22a")
 }],
 "loop": true,
-"name": &"walk",
-"speed": 5.0
+"name": &"idle",
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 0.2,
@@ -102,6 +107,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk_back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_2rnox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtvu4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjj5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bs78n")
+}],
+"loop": true,
+"name": &"walk_front",
 "speed": 5.0
 }, {
 "frames": [{
@@ -143,15 +165,28 @@ animations = [{
 
 [node name="Character" type="CharacterBody2D"]
 position = Vector2(0, -1)
-script = ExtResource("1_vc4hi")
+script = ExtResource("1_vjj5v")
+speed = 300.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Figure" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_olc5l")
-animation = &"walk"
+animation = &"walk_back"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_vc4hi")
 
-[node name="DialogPanel" parent="." instance=ExtResource("3_wdfde")]
-visible = false
+[node name="PlayerStateMachine" type="Node" parent="."]
+script = ExtResource("3_bs78n")
+
+[node name="Idle" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("4_hs3e2")
+metadata/_custom_type_script = "uid://dui31h2ubqmsy"
+
+[node name="Talk" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("5_2nyhi")
+metadata/_custom_type_script = "uid://jtkfc31rkhls"
+
+[node name="Walk" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("6_3kwhw")
+metadata/_custom_type_script = "uid://dte6merpaan0n"
