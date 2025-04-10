@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr6a81byvwryi"
-path="res://.godot/imported/logo.png-389ac4702958cc09664bfd394e72101a.ctex"
+uid="uid://oreb7ri1w86p"
+path="res://.godot/imported/delete.svg-82e75946af66d3582ab5e70adb3a30ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/eazy_dialog/icon/logo.png"
-dest_files=["res://.godot/imported/logo.png-389ac4702958cc09664bfd394e72101a.ctex"]
+source_file="res://addons/eazy_dialog/icon/delete.svg"
+dest_files=["res://.godot/imported/delete.svg-82e75946af66d3582ab5e70adb3a30ca.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
